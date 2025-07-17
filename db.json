@@ -32,40 +32,39 @@
     "employerRate": 0.015,
     "description": "Affordable Housing Levy (1.5% gross)"
   },
-  "pensionContribution": {
-    "name": "Pension Contribution",
-    "description": "Voluntary registered scheme contributions",
-    "maxMonthly": 30000
-  },
-  "mortgageInterestRelief": {
-    "name": "Mortgage Interest",
-    "description": "Interest on owner-occupied home mortgage",
-    "maxMonthly": 30000
-  },
-  "lifeInsuranceRelief": {
-    "name": "Insurance Relief - Life",
-    "description": "15% of premiums paid for life insurance (max KES 5,000/month)",
-    "rate": 0.15,
-    "maxMonthly": 5000
-  },
-  "educationPolicyRelief": {
-    "name": "Insurance Relief - Education Policy",
-    "description": "15% of premiums paid for education policies for children",
-    "rate": 0.15,
-    "maxMonthly": 5000
-  },
-  "medicalInsuranceRelief": {
-    "name": "Insurance Relief - Medical (Private)",
-    "description": "15% of premiums paid for private health policies (if outside SHIF)",
-    "rate": 0.15,
-    "maxMonthly": 5000
-  },
-  "grossPay": {
-    "basicSalary": 0,
-    "houseAllowance": 0,
-    "transportAllowance": 0,
-    "overtime": 0,
-    "commissions": 0,
-    "bonuses": 0
-  }
+  "optionalDeductions": [
+    {
+      "id": 1,
+      "name": "Pension Contribution",
+      "maxMonthly": 30000
+    },
+    {
+      "id": 2,
+      "name": "Mortgage Interest",
+      "maxMonthly": 30000
+    },
+    {
+      "id": 3,
+      "name": "Life Insurance Premium",
+      "rate": 0.15,
+      "maxMonthly": 5000
+    },
+    {
+      "id": 4,
+      "name": "Education Policy Premium",
+      "rate": 0.15,
+      "maxMonthly": 5000
+    },
+    {
+      "id": 5,
+      "name": "Medical Insurance Premium",
+      "rate": 0.15,
+      "maxMonthly": 5000
+    },
+    {
+      "id": 6,
+      "name": "Post-Retirement Medical Fund",
+      "maxMonthly": 15000
+    }
+  ]
 }

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kenya PAYE Calculator 2025</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <h1>Kenya PAYE Calculator</h1>
+
+    <form id="payeForm">
+      <!-- GROSS PAY SECTION -->
+      <fieldset>
+        <legend>Gross Pay:</legend>
+        <label>
+          <span class="required-label">Basic Salary</span>:
+          <input type="number" id="basicSalary" required placeholder="Enter monthly salary" />
+        </label>
+      </fieldset>
+
+      <!-- STATUTORY DEDUCTIONS -->
+      <fieldset>
+        <legend>Statutory Deductions:</legend>
+
+        <label>
+          NSSF Contribution:
+          <input type="text" id="nssf" readonly placeholder="6% of Gross Pay Max 4320" />
+        </label>
+
+        <label>
+          SHIF (2.75%):
+          <input type="text" id="shif" readonly placeholder="2.75% of Gross Pay" />
+        </label>
+
+        <label>
+          Housing Levy (1.5%):
+          <input type="text" id="housingLevy" readonly placeholder="1.5% of Gross Pay" />
+        </label>
+      </fieldset>
+
+      <!-- OPTIONAL DEDUCTIONS -->
+      <fieldset>
+        <legend>Optional Deductions:</legend>
+
+        <label>
+          Pension Contribution:
+          <input type="number" id="pensionContribution" placeholder="Max 30,000 per month" />
+        </label>
+
+        <label>
+          Mortgage Interest:
+          <input type="number" id="mortgageInterest" placeholder="Max 30,000 per month" />
+        </label>
+
+        <label>
+          Life Insurance Premium:
+          <input type="number" id="lifeInsurance" placeholder="Max 5,000 per month (15% relief)" />
+        </label>
+
+        <label>
+          Education Policy Premium:
+          <input type="number" id="educationInsurance" placeholder="Max 5,000 per month (15% relief)" />
+        </label>
+
+        <label>
+          Medical Insurance Premium:
+          <input type="number" id="medicalInsurance" placeholder="Max 5,000 per month (15% relief)" />
+        </label>
+
+        <label>
+          Post-Retirement Medical Fund:
+          <input type="number" id="postRetirementFund" placeholder="Max 15,000 per month" />
+        </label>
+      </fieldset>
+
+      <button type="submit">Calculate PAYE</button>
+    </form>
+
+    <!-- RESULTS SECTION -->
+    <section id="results">
+      <h2>Calculation Results</h2>
+      <p><strong>Total Gross Salary:</strong> <span id="totalGross">KES 0</span></p>
+      <p><strong>Total Allowable Expenses:</strong> <span id="totalAllowable">KES 0</span></p>
+      <p><strong>Net Taxable Income:</strong> <span id="netTaxable">KES 0</span></p>
+      <p><strong>Gross PAYE:</strong> <span id="grossPaye">KES 0</span></p>
+      <p><strong>Tax Relief:</strong> <span id="taxRelief">KES 0</span></p>
+      <p><strong>Total Insurance Relief:</strong> <span id="insuranceRelief">KES 0</span></p>
+      <p><strong>Net PAYE:</strong> <span id="netPaye">KES 0</span></p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
