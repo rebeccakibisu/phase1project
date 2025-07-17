@@ -1,103 +1,110 @@
-// PAYE Calculator Script Based on Provided db.json
+// script.js
 
-const form = document.getElementById("payeForm");
+let grossPay = 0;
 
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+const incomeInputs = [
+  "basicSalary",
+  "houseAllowance",
+  "transportAllowance",
+  "entertainmentAllowance",
+  "overtimePay",
+  "bonus",
+  "otherAllowances"
+];
 
-  const grossPay = Number(document.getElementById("basicSalary").value);
+// Attach real-time input listeners to income fields
+document.addEventListener("DOMContentLoaded", () => {
+  incomeInputs.forEach(id => {
+    const input = document.getElementById(id);
+    if (input) {
+      input.addEventListener("input", updateGrossPreview);
+    }
+  });
 
-  const [taxBrackets, personalRelief, shifRate, housingLevyRate, nssfRates, optionalDeductions] = await Promise.all([
-    fetch("http://localhost:3000/taxBrackets").then(res => res.json()),
-    fetch("http://localhost:3000/personalRelief").then(res => res.json()),
+  document.getElementById("payeForm").addEventListener("submit", calculatePAYE);
+});
+
+function updateGrossPreview() {
+  grossPay = incomeInputs.reduce((sum, id) => {
+    const val = parseFloat(document.getElementById(id).value) || 0;
+    return sum + val;
+  }, 0);
+  document.getElementById("grossPreview").textContent = `KES ${grossPay.toFixed(2)}`;
+  document.getElementById("totalGross").textContent = `KES ${grossPay.toFixed(2)}`;
+}
+
+async function calculatePAYE(event) {
+  event.preventDefault();
+
+  // Fetch deductions and tax rules from db.json (json-server)
+  const [nssfData, shifData, housingData, taxBrackets, reliefs, optionalDeductions] = await Promise.all([
+    fetch("http://localhost:3000/nssf").then(res => res.json()),
     fetch("http://localhost:3000/shif").then(res => res.json()),
     fetch("http://localhost:3000/housingLevy").then(res => res.json()),
-    fetch("http://localhost:3000/nssf").then(res => res.json()),
+    fetch("http://localhost:3000/taxBrackets").then(res => res.json()),
+    fetch("http://localhost:3000/personalRelief").then(res => res.json()),
     fetch("http://localhost:3000/optionalDeductions").then(res => res.json())
   ]);
 
-  // CALCULATE STATUTORY DEDUCTIONS
-  const nssf = calculateNSSF(grossPay, nssfRates);
-  const shif = grossPay * shifRate.rate;
-  const housingLevy = grossPay * housingLevyRate.employeeRate;
+  // Statutory deductions
+  const nssf = calculateNSSF(nssfData);
+  const shif = grossPay * shifData.rate;
+  const housing = grossPay * housingData.employeeRate;
 
   document.getElementById("nssf").value = `KES ${nssf.toFixed(2)}`;
   document.getElementById("shif").value = `KES ${shif.toFixed(2)}`;
-  document.getElementById("housingLevy").value = `KES ${housingLevy.toFixed(2)}`;
+  document.getElementById("housingLevy").value = `KES ${housing.toFixed(2)}`;
 
-  // GROSS SALARY
-  const totalGross = grossPay;
+  // Optional deductions (user input with limits from db.json)
+  const deductions = {
+    pension: limitInput("pensionContribution", optionalDeductions[0].maxMonthly),
+    mortgage: limitInput("mortgageInterest", optionalDeductions[1].maxMonthly),
+    life: limitInput("lifeInsurance", optionalDeductions[2].maxMonthly),
+    education: limitInput("educationInsurance", optionalDeductions[3].maxMonthly),
+    medical: limitInput("medicalInsurance", optionalDeductions[4].maxMonthly),
+    postRetirement: limitInput("postRetirementFund", optionalDeductions[5].maxMonthly)
+  };
 
-  // ALLOWABLE DEDUCTIONS (statutory + optional)
-  let totalAllowable = nssf + shif + housingLevy;
-  let insuranceRelief = 0;
+  const allowable = nssf + shif + housing + deductions.pension + deductions.mortgage + deductions.postRetirement;
+  const netTaxable = grossPay - allowable;
 
-  optionalDeductions.forEach(deduction => {
-    const id = mapDeductionToId(deduction.name);
-    const input = document.getElementById(id);
-    if (!input) return;
-    const value = Number(input.value) || 0;
-    const capped = Math.min(value, deduction.maxMonthly || value);
+  const grossPaye = calculatePAYEFromBrackets(netTaxable, taxBrackets);
 
-    // Insurance relief (15%) if applicable
-    if (deduction.rate) {
-      insuranceRelief += Math.min(capped * deduction.rate, deduction.maxMonthly);
-    }
-
-    totalAllowable += capped;
-  });
-
-  // NET TAXABLE INCOME
-  const netTaxable = totalGross - totalAllowable;
-
-  // CALCULATE GROSS PAYE
-  let remainingIncome = netTaxable;
-  let grossPaye = 0;
-  taxBrackets.forEach(bracket => {
-    if (remainingIncome > 0) {
-      const upper = bracket.max || remainingIncome + bracket.min;
-      const taxable = Math.min(remainingIncome, upper - bracket.min);
-      grossPaye += taxable * bracket.rate;
-      remainingIncome -= taxable;
-    }
-  });
-
-  const taxRelief = personalRelief.monthlyAmount;
+  const insuranceRelief = 0.15 * (deductions.life + deductions.education + deductions.medical);
+  const taxRelief = reliefs.monthlyAmount;
   const netPaye = Math.max(0, grossPaye - taxRelief - insuranceRelief);
 
-  // POPULATE RESULTS
-  document.getElementById("totalGross").textContent = `KES ${totalGross.toFixed(2)}`;
-  document.getElementById("totalAllowable").textContent = `KES ${totalAllowable.toFixed(2)}`;
+  // Display results
+  document.getElementById("totalAllowable").textContent = `KES ${allowable.toFixed(2)}`;
   document.getElementById("netTaxable").textContent = `KES ${netTaxable.toFixed(2)}`;
   document.getElementById("grossPaye").textContent = `KES ${grossPaye.toFixed(2)}`;
   document.getElementById("taxRelief").textContent = `KES ${taxRelief.toFixed(2)}`;
   document.getElementById("insuranceRelief").textContent = `KES ${insuranceRelief.toFixed(2)}`;
   document.getElementById("netPaye").textContent = `KES ${netPaye.toFixed(2)}`;
-});
-
-function calculateNSSF(gross, nssfData) {
-  const tier1Limit = nssfData.tier1.lowerEarningLimit;
-  const tier2Limit = nssfData.tier2.upperEarningLimit;
-  const tier1Rate = nssfData.tier1.rate;
-  const tier2Rate = nssfData.tier2.rate;
-  const maxTotal = nssfData.employeeMaxTotal;
-
-  const tier1 = Math.min(gross, tier1Limit) * tier1Rate;
-  let tier2 = 0;
-  if (gross > tier1Limit) {
-    tier2 = Math.min(gross - tier1Limit, tier2Limit - tier1Limit) * tier2Rate;
-  }
-  return Math.min(tier1 + tier2, maxTotal);
 }
 
-function mapDeductionToId(name) {
-  const map = {
-    "Pension Contribution": "pensionContribution",
-    "Mortgage Interest": "mortgageInterest",
-    "Life Insurance Premium": "lifeInsurance",
-    "Education Policy Premium": "educationInsurance",
-    "Medical Insurance Premium": "medicalInsurance",
-    "Post-Retirement Medical Fund": "postRetirementFund"
-  };
-  return map[name];
+function limitInput(id, max) {
+  const val = parseFloat(document.getElementById(id).value) || 0;
+  return Math.min(val, max);
+}
+
+function calculateNSSF(data) {
+  let tier1 = Math.min(grossPay, data.tier1.lowerEarningLimit) * data.tier1.rate;
+  let tier2 = 0;
+  if (grossPay > data.tier1.lowerEarningLimit) {
+    tier2 = Math.min(grossPay - data.tier1.lowerEarningLimit, data.tier2.upperEarningLimit - data.tier1.lowerEarningLimit) * data.tier2.rate;
+  }
+  return Math.min(tier1 + tier2, data.employeeMaxTotal);
+}
+
+function calculatePAYEFromBrackets(income, brackets) {
+  let tax = 0;
+  for (let bracket of brackets) {
+    if (income > bracket.min) {
+      const upper = bracket.max || income;
+      const taxable = Math.min(income, upper) - bracket.min;
+      tax += taxable * bracket.rate;
+    }
+  }
+  return tax;
 }

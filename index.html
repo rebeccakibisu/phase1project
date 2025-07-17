@@ -1,32 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kenya PAYE Calculator 2025</title>
+  <title>Kenya PAYE Calculator-2025</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <main>
-    <h1>Kenya PAYE Calculator</h1>
+    <h1>Kenya PAYE Calculator-2025</h1>
 
     <form id="payeForm">
-      <!-- GROSS PAY SECTION -->
+      <!-- INCOME SECTION -->
       <fieldset>
-        <legend>Gross Pay:</legend>
+        <legend>Sources of Income (Gross Salary = Sum of All Below)</legend>
+
         <label>
-          <span class="required-label">Basic Salary</span>:
-          <input type="number" id="basicSalary" required placeholder="Enter monthly salary" />
+          <span class="required-label">Basic Salary <span class="required">*</span></span>:
+          <input type="number" id="basicSalary" required placeholder="Required *" />
         </label>
+
+        <label>
+          House Allowance:
+          <input type="number" id="houseAllowance" placeholder="e.g. 15,000" />
+        </label>
+
+        <label>
+          Transport Allowance:
+          <input type="number" id="transportAllowance" placeholder="e.g. 5,000" />
+        </label>
+
+        <label>
+          Entertainment Allowance:
+          <input type="number" id="entertainmentAllowance" placeholder="e.g. 3,000" />
+        </label>
+
+        <label>
+          Overtime Pay:
+          <input type="number" id="overtimePay" placeholder="e.g. 10,000" />
+        </label>
+
+        <label>
+          Bonus:
+          <input type="number" id="bonus" placeholder="e.g. 20,000" />
+        </label>
+
+        <label>
+          Other Allowances:
+          <input type="number" id="otherAllowances" placeholder="Any additional income" />
+        </label>
+
+        <p><strong>Gross Salary Preview:</strong> <span id="grossPreview">KES 0</span></p>
       </fieldset>
 
       <!-- STATUTORY DEDUCTIONS -->
       <fieldset>
-        <legend>Statutory Deductions:</legend>
+        <legend>Statutory Deductions (Auto-Populated)</legend>
 
         <label>
           NSSF Contribution:
-          <input type="text" id="nssf" readonly placeholder="6% of Gross Pay Max 4320" />
+          <input type="text" id="nssf" readonly placeholder="6% of Gross Salary Max 4320" />
         </label>
 
         <label>
@@ -42,7 +73,7 @@
 
       <!-- OPTIONAL DEDUCTIONS -->
       <fieldset>
-        <legend>Optional Deductions:</legend>
+        <legend>Optional Deductions</legend>
 
         <label>
           Pension Contribution:
@@ -91,6 +122,35 @@
     </section>
   </main>
 
+  <script>
+    const incomeInputs = [
+      "basicSalary",
+      "houseAllowance",
+      "transportAllowance",
+      "entertainmentAllowance",
+      "overtimePay",
+      "bonus",
+      "otherAllowances"
+    ];
+
+    incomeInputs.forEach(id => {
+      document.getElementById(id).addEventListener("input", updateGrossPreview);
+    });
+
+    let grossPay = 0;
+
+    function updateGrossPreview() {
+      grossPay = incomeInputs.reduce((sum, id) => {
+        const val = parseFloat(document.getElementById(id).value) || 0;
+        return sum + val;
+      }, 0);
+      document.getElementById("grossPreview").textContent = `KES ${grossPay.toFixed(2)}`;
+      document.getElementById("totalGross").textContent = `KES ${grossPay.toFixed(2)}`;
+    }, 0);
+      document.getElementById("grossPreview").textContent = `KES ${total.toFixed(2)}`;
+      document.getElementById("totalGross").textContent = `KES ${total.toFixed(2)}`;
+    }
+  </script>
   <script src="script.js"></script>
 </body>
 </html>
