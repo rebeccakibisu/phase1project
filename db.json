@@ -1,0 +1,71 @@
+{
+  "taxBrackets": [
+    { "id": 1, "min": 0, "max": 24000, "rate": 0.10 },
+    { "id": 2, "min": 24001, "max": 32333, "rate": 0.25 },
+    { "id": 3, "min": 32334, "max": 500000, "rate": 0.30 },
+    { "id": 4, "min": 500001, "max": 800000, "rate": 0.325 },
+    { "id": 5, "min": 800001, "max": null, "rate": 0.35 }
+  ],
+  "personalRelief": {
+    "monthlyAmount": 2400
+  },
+  "nssf": {
+    "tier1": {
+      "lowerEarningLimit": 8000,
+      "rate": 0.06,
+      "maxContribution": 480
+    },
+    "tier2": {
+      "upperEarningLimit": 72000,
+      "rate": 0.06,
+      "maxContribution": 3840
+    },
+    "employeeMaxTotal": 4320,
+    "employerMatch": true
+  },
+  "shif": {
+    "rate": 0.0275,
+    "description": "2.75% of gross salary, no upper cap"
+  },
+  "housingLevy": {
+    "employeeRate": 0.015,
+    "employerRate": 0.015,
+    "description": "Affordable Housing Levy (1.5% gross)"
+  },
+  "pensionContribution": {
+    "name": "Pension Contribution",
+    "description": "Voluntary registered scheme contributions",
+    "maxMonthly": 30000
+  },
+  "mortgageInterestRelief": {
+    "name": "Mortgage Interest",
+    "description": "Interest on owner-occupied home mortgage",
+    "maxMonthly": 30000
+  },
+  "lifeInsuranceRelief": {
+    "name": "Insurance Relief - Life",
+    "description": "15% of premiums paid for life insurance (max KES 5,000/month)",
+    "rate": 0.15,
+    "maxMonthly": 5000
+  },
+  "educationPolicyRelief": {
+    "name": "Insurance Relief - Education Policy",
+    "description": "15% of premiums paid for education policies for children",
+    "rate": 0.15,
+    "maxMonthly": 5000
+  },
+  "medicalInsuranceRelief": {
+    "name": "Insurance Relief - Medical (Private)",
+    "description": "15% of premiums paid for private health policies (if outside SHIF)",
+    "rate": 0.15,
+    "maxMonthly": 5000
+  },
+  "grossPay": {
+    "basicSalary": 0,
+    "houseAllowance": 0,
+    "transportAllowance": 0,
+    "overtime": 0,
+    "commissions": 0,
+    "bonuses": 0
+  }
+}
