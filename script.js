@@ -11,6 +11,7 @@ const incomeInputs = [
   "bonus",
   "otherAllowances"
 ];
+fetch("https://raw.githubusercontent.com/rebeccakibisu/phase1project/main/db.json")
 
 // Attach real-time input listeners to income fields
 document.addEventListener("DOMContentLoaded", () => {
