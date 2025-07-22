@@ -1,180 +1,207 @@
-// Base URL for fetching config data from local json-server
-const API_URL = "http://localhost:3002";
+/* General Page Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
 
-// Will hold the fetched tax configuration and relief values
-let configData = {};
+body {
+  background: linear-gradient(to right, #f0f4f8, #d9e2ec);
+  color: #333;
+  line-height: 1.6;
+  padding: 2rem;
+}
 
-// Wait for DOM to fully load before attaching events
-document.addEventListener("DOMContentLoaded", () => {
-  fetchConfig();
-  setupGrossIncomeListener();
-  document.getElementById("payeForm").addEventListener("submit", handleSubmit);
-});
+header {
+  text-align: center;
+  padding: 2rem 0;
+  background-color: #0077b6;
+  color: white;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  animation: fadeIn 1s ease-in-out;
+}
 
-// Fetch PAYE configuration data (tax brackets, reliefs, NSSF) from db.json
-async function fetchConfig() {
-  try {
-    const response = await fetch(API_URL);
-    if (!response.ok) throw new Error(`HTTP error ${response.status}`);
-    configData = await response.json();
-    console.log("Fetched config:", configData);
-  } catch (error) {
-    console.error("Failed to fetch config:", error.message);
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.features {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.features h2 {
+  display: flex;
+  justify-content: center;
+  color: #003366;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.feature {
+  max-width: 600px;
+  border: 2px solid #0077b6;
+  border-radius: 10px;
+  padding: 1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #ffffff;
+}
+
+.feature:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.feature h3 {
+  margin-bottom: 0.5rem;
+  color: #0077b6;
+}
+
+.feature i.clock-icon::before {
+  content: "\f017"; /* Font Awesome clock icon */
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  margin-right: 8px;
+}
+
+.cta {
+  max-width: 600px;
+  margin: 0 auto 3rem auto;
+  padding: 1.5rem;
+  background-color: #e0f4ff;
+  border-radius: 10px;
+  text-align: center;
+  animation: fadeInUp 1s ease-in-out;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.cta h2 {
+  margin-bottom: 1rem;
+  color: #005f87;
+  font-size: 1.75rem;
+  text-align: center;
+}
+
+.cta button {
+  background: #0077b6;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.cta button:hover {
+  background: #005f87;
+  transform: scale(1.05);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+label {
+  font-weight: bold;
+}
+
+input[type="number"] {
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  transition: border-color 0.3s ease;
+}
+
+input[type="number"]:focus {
+  border-color: #0077b6;
+  outline: none;
+}
+
+input:valid {
+  border-color: #28a745;
+}
+
+input:invalid {
+  border-color: #dc3545;
+}
+
+button[type="submit"],
+button[type="button"] {
+  background: #28a745;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button[type="submit"]:hover,
+button[type="button"]:hover {
+  background: #218838;
+  transform: scale(1.03);
+}
+
+.results {
+  background: #e9f7ef;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+  animation: fadeIn 1s ease-in-out;
+}
+
+footer {
+  text-align: center;
+  margin-top: 2rem;
+  color: #666;
+}
+
+#calculatorSection,
+#additionalFields {
+  display: none;
+  animation: fadeInUp 0.8s ease-in-out;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  .features, .cta, .container {
+    padding: 1rem;
   }
-}
 
-// Attach input listeners to income fields to update gross salary live
-function setupGrossIncomeListener() {
-  const incomeFields = [
-    "basicSalary",
-    "houseAllowance",
-    "transportAllowance",
-    "entertainmentAllowance",
-    "overtimePay",
-    "bonus",
-    "otherAllowances"
-  ];
-
-  incomeFields.forEach(id => {
-    document.getElementById(id).addEventListener("input", updateGross);
-  });
-}
-
-// Calculate gross salary and update preview + statutory deductions
-function updateGross() {
-  const incomeFields = [
-    "basicSalary",
-    "houseAllowance",
-    "transportAllowance",
-    "entertainmentAllowance",
-    "overtimePay",
-    "bonus",
-    "otherAllowances"
-  ];
-
-  // Compute gross salary from all income fields
-  let gross = incomeFields.reduce((total, id) => {
-    const value = parseFloat(document.getElementById(id).value) || 0;
-    return total + value;
-  }, 0);
-
-  // Update UI with gross salary
-  document.getElementById("grossPreview").textContent = `KES ${gross.toFixed(2)}`;
-  document.getElementById("totalGross").textContent = `KES ${gross.toFixed(2)}`;
-
-  // Recalculate statutory deductions based on new gross
-  calculateStatutoryDeductions(gross);
-}
-
-// Calculate NSSF, SHIF, and Housing Levy deductions and update fields
-function calculateStatutoryDeductions(gross) {
-  const nssf = calculateNSSF(gross);
-  const shif = gross * 0.0275;
-  const housing = gross * 0.015;
-
-  document.getElementById("nssf").value = `KES ${nssf.toFixed(2)}`;
-  document.getElementById("shif").value = `KES ${shif.toFixed(2)}`;
-  document.getElementById("housingLevy").value = `KES ${housing.toFixed(2)}`;
-}
-
-// Compute NSSF Tier 1 + Tier 2 deduction capped at maxContribution
-function calculateNSSF(gross) {
-  const { nssf } = configData;
-  console.log("NSSF config:", nssf);
-  if (!nssf) return 0;
-
-  const tier1 = Math.min(gross, nssf.tier1.lowerEarningLimit) * nssf.tier1.rate;
-  const tier2 = Math.min(Math.max(gross - nssf.tier1.lowerEarningLimit, 0), nssf.tier2.upperEarningLimit - nssf.tier1.lowerEarningLimit) * nssf.tier2.rate;
-
-  const total = tier1 + tier2;
-  console.log(`Tier1: ${tier1}, Tier2: ${tier2}, Total before cap: ${total}`);
-  
-  return Math.min(total, nssf.maxContribution);
-  
-}
-
-// Form submission handler to calculate PAYE and deductions
-function handleSubmit(e) {
-  e.preventDefault();
-
-  // Get gross salary from UI
-  const gross = parseFloat(document.getElementById("totalGross").textContent.replace("KES", "")) || 0;
-  const nssf = calculateNSSF(gross);
-  const shif = gross * 0.0275;
-  const housing = gross * 0.015;
-
-  // Optional deductions like pension/mortgage/retirement fund
-  const optionalDeductions = [
-    "pensionContribution",
-    "mortgageInterest",
-    "postRetirementFund"
-  ];
-
-  // Insurance-based deductions with 15% relief
-  const insuranceDeductions = [
-    "lifeInsurance",
-    "educationInsurance",
-    "medicalInsurance"
-  ];
-
-  // Sum optional deductions
-  const totalOptional = optionalDeductions.reduce((sum, id) => {
-    return sum + (parseFloat(document.getElementById(id).value) || 0);
-  }, 0);
-
-  // Sum 15% of insurance premiums
-  const insuranceRelief = insuranceDeductions.reduce((sum, id) => {
-    const value = parseFloat(document.getElementById(id).value) || 0;
-    return sum + value * 0.15;
-  }, 0);
-
-  // Compute net taxable income
-  const allowableExpenses = nssf + shif + housing + totalOptional;
-  const netTaxableIncome = gross - allowableExpenses;
-
-  // Compute gross PAYE from tax brackets
-  let grossPaye = 0;
-  if (configData.taxBrackets) {
-    grossPaye = computePAYE(netTaxableIncome, configData.taxBrackets);
+  .cta h2 {
+    font-size: 1.4rem;
   }
 
-  const personalRelief = configData.personalRelief?.monthlyAmount || 2400;
-  const netPaye = Math.max(0, grossPaye - personalRelief - insuranceRelief);
-
-  // Update results in UI
-  document.getElementById("totalAllowable").textContent = `KES ${allowableExpenses.toFixed(2)}`;
-  document.getElementById("netTaxable").textContent = `KES ${netTaxableIncome.toFixed(2)}`;
-  document.getElementById("grossPaye").textContent = `KES ${grossPaye.toFixed(2)}`;
-  document.getElementById("taxRelief").textContent = `KES ${personalRelief.toFixed(2)}`;
-  document.getElementById("insuranceRelief").textContent = `KES ${insuranceRelief.toFixed(2)}`;
-  document.getElementById("netPaye").textContent = `KES ${netPaye.toFixed(2)}`;
-
-  console.log("Net taxable income:", netTaxableIncome);
-  console.log("Tax brackets:", configData.taxBrackets);
-
-}
-
-// Calculate PAYE using progressive tax brackets
-function computePAYE(income, brackets) {
-  let tax = 0;
-  for (let i = 0; i < brackets.length; i++) {
-    const { min, max, rate } = brackets[i];
-    if (income > min) {
-      const upper = max ?? income; // if max is null, use full income
-      const taxable = Math.min(income, upper) - min;
-      tax += taxable * rate;
-      
-    }
-    
+  button {
+    width: 100%;
   }
-  console.log("Net Taxable Income:", netTaxableIncome);
-  console.log("Tax Brackets:", configData.taxBrackets);
-  console.log("Gross PAYE:", grossPaye);
-  console.log("Computing PAYE on:", income);
-
-
-  return tax;
-
-
-
 }
