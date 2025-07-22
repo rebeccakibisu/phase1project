@@ -12,16 +12,13 @@
   "nssf": {
     "tier1": {
       "lowerEarningLimit": 8000,
-      "rate": 0.06,
-      "maxContribution": 480
+      "rate": 0.06
     },
     "tier2": {
       "upperEarningLimit": 72000,
-      "rate": 0.06,
-      "maxContribution": 3840
+      "rate": 0.06
     },
-    "employeeMaxTotal": 4320,
-    "employerMatch": true
+    "maxContribution": 4320
   },
   "shif": {
     "rate": 0.0275,
