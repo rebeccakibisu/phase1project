@@ -1,106 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Page Meta and Title -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kenya PAYE Calculator 2025</title>
+
+  <!-- External Stylesheet -->
   <link rel="stylesheet" href="style.css" />
-  <style>
-    body {
-      margin: 0;
-      font-family: "Segoe UI", sans-serif;
-      background: #f3f4f6;
-      color: #1f2937;
-    }
-    header {
-      background: #047857;
-      color: white;
-      padding: 2rem;
-      text-align: center;
-    }
-    header h1 {
-      margin-bottom: 0.5rem;
-    }
-    .container {
-      max-width: 960px;
-      margin: auto;
-      padding: 2rem;
-    }
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-    .feature {
-      background: white;
-      padding: 1.5rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-      text-align: center;
-    }
-    .cta {
-      background: #065f46;
-      color: white;
-      padding: 1.5rem;
-      margin-top: 3rem;
-      border-radius: 8px;
-      text-align: center;
-    }
-    .cta button {
-      background: white;
-      color: #065f46;
-      padding: 0.75rem 1.5rem;
-      border-radius: 5px;
-      font-weight: bold;
-      border: none;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .cta button:hover {
-      background: #e0f2f1;
-    }
-    footer {
-      text-align: center;
-      padding: 2rem;
-      font-size: 0.9rem;
-      color: #6b7280;
-    }
-    #calculatorSection {
-      display: none;
-      background: white;
-      margin-top: 3rem;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    }
-    #calculatorSection h2 {
-      margin-bottom: 1rem;
-    }
-    label {
-      display: block;
-      margin: 1rem 0 0.5rem;
-    }
-    input {
-      width: 100%;
-      padding: 0.5rem;
-      margin-bottom: 1rem;
-      border: 1px solid #d1d5db;
-      border-radius: 4px;
-    }
-    .results p {
-      margin: 0.5rem 0;
-    }
-  </style>
 </head>
 <body>
 
+  <!-- Header Section -->
   <header>
     <h1>Kenya PAYE Calculator – 2025</h1>
     <p>Accurate, simple, and instant calculation of your monthly tax obligations in Kenya</p>
   </header>
 
   <div class="container">
+    <!-- Why Use Section -->
     <h2>Why Use This Tool?</h2>
     <div class="features">
       <div class="feature">
@@ -111,26 +29,45 @@
         <h3>🧮 Real-Time Calculations</h3>
         <p>Get instant PAYE breakdown as you type — no page reloads.</p>
       </div>
-    
       <div class="feature">
         <h3>💼 Ideal for Employees & Employers</h3>
         <p>Helps you plan salaries, deductions, and statutory contributions with ease.</p>
       </div>
     </div>
 
+    <!-- Call-to-Action -->
     <div class="cta">
       <h2>Start Calculating Your PAYE Now</h2>
       <button onclick="document.getElementById('calculatorSection').style.display='block'; this.style.display='none'">Launch PAYE Calculator</button>
     </div>
 
+    <!-- PAYE Calculator Section -->
     <div id="calculatorSection">
       <h2>PAYE Calculator</h2>
       <form id="payeForm">
+        <!-- Basic Input -->
         <label for="basicSalary">Total Gross Salary:</label>
         <input type="number" id="basicSalary" required />
+
+        <!-- Additional Fields Button -->
+        <button type="button" onclick="document.getElementById('additionalFields').style.display='block'; this.style.display='none'">
+          Add Additional Information
+        </button>
+
+        <!-- Hidden Fields Initially -->
+        <div id="additionalFields">
+          <label for="mortgageInterest">Mortgage Interest:</label>
+          <input type="number" id="mortgageInterest" />
+
+          <label for="insuranceRelief">Insurance Premium:</label>
+          <input type="number" id="insuranceRelief" />
+        </div>
+
+        <!-- Submit Button -->
         <button type="submit">Calculate</button>
       </form>
 
+      <!-- Output Results -->
       <div class="results">
         <h3>Results</h3>
         <p><strong>PAYE Payable:</strong> <span id="netPaye">KES 0</span></p>
@@ -138,10 +75,12 @@
     </div>
   </div>
 
+  <!-- Footer -->
   <footer>
     &copy; 2025 Kenya PAYE Calculator. All rights reserved.
   </footer>
 
+  <!-- JavaScript Logic -->
   <script src="script.js"></script>
 </body>
 </html>
