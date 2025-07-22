@@ -30,6 +30,58 @@ Key features include:
 
 ---
 
+## 📦 package.json
+
+This project includes a `package.json` file for dependency management. It enables you to:
+
+* Run a local JSON server for mocking API responses from `db.json`
+* Install and manage project dependencies like `json-server` and development tools
+
+### 📁 Sample `package.json`:
+
+```json
+{
+  "name": "kenya-paye-calculator",
+  "version": "1.0.0",
+  "description": "A web-based tool to calculate PAYE, NHIF, NSSF, and housing levy for Kenyan employees (2025).",
+  "main": "script.js",
+  "scripts": {
+    "start": "json-server --watch db.json --port 3002"
+  },
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "json-server": "^0.17.4"
+  }
+}
+```
+
+### 🔧 Install Dependencies
+
+```bash
+npm install
+```
+
+### ▶️ Run JSON Server
+
+```bash
+npm start
+```
+
+This will start a local server at `http://localhost:3002` which serves your `db.json` configuration.
+
+---
+
+## 🗂 Folder Structure
+
+```
+project-root/
+├── index.html
+├── style.css
+├── script.js
+├── db.json
+└── package.json
+```
 ##  Project Setup Instructions
 
 ### Prerequisites
@@ -67,6 +119,8 @@ kenya-paye-calculator/
 ├── script.js          # JavaScript logic and fetch operations
 ├── db.json            # Tax brackets and deduction rules
 ├── README.md          # Project documentation
+└── package.json       # Project dependencies and json-server script
+
 ```
 
 ---
