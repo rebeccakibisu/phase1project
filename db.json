@@ -1,67 +1,69 @@
 {
-  "taxBrackets": [
-    { "id": 1, "min": 0, "max": 24000, "rate": 0.10 },
-    { "id": 2, "min": 24001, "max": 32333, "rate": 0.25 },
-    { "id": 3, "min": 32334, "max": 500000, "rate": 0.30 },
-    { "id": 4, "min": 500001, "max": 800000, "rate": 0.325 },
-    { "id": 5, "min": 800001, "max": null, "rate": 0.35 }
-  ],
-  "personalRelief": {
-    "monthlyAmount": 2400
-  },
-  "nssf": {
-    "tier1": {
-      "lowerEarningLimit": 8000,
-      "rate": 0.06
+  "config": {
+    "taxBrackets": [
+      { "id": 1, "min": 0, "max": 24000, "rate": 0.10 },
+      { "id": 2, "min": 24001, "max": 32333, "rate": 0.25 },
+      { "id": 3, "min": 32334, "max": 500000, "rate": 0.30 },
+      { "id": 4, "min": 500001, "max": 800000, "rate": 0.325 },
+      { "id": 5, "min": 800001, "max": null, "rate": 0.35 }
+    ],
+    "personalRelief": {
+      "monthlyAmount": 2400
     },
-    "tier2": {
-      "upperEarningLimit": 72000,
-      "rate": 0.06
+    "nssf": {
+      "tier1": {
+        "lowerEarningLimit": 8000,
+        "rate": 0.06
+      },
+      "tier2": {
+        "upperEarningLimit": 72000,
+        "rate": 0.06
+      },
+      "maxContribution": 4320
     },
-    "maxContribution": 4320
-  },
-  "shif": {
-    "rate": 0.0275,
-    "description": "2.75% of gross salary, no upper cap"
-  },
-  "housingLevy": {
-    "employeeRate": 0.015,
-    "employerRate": 0.015,
-    "description": "Affordable Housing Levy (1.5% gross)"
-  },
-  "optionalDeductions": [
-    {
-      "id": 1,
-      "name": "Pension Contribution",
-      "maxMonthly": 30000
+    "shif": {
+      "rate": 0.0275,
+      "description": "2.75% of gross salary, no upper cap"
     },
-    {
-      "id": 2,
-      "name": "Mortgage Interest",
-      "maxMonthly": 30000
+    "housingLevy": {
+      "employeeRate": 0.015,
+      "employerRate": 0.015,
+      "description": "Affordable Housing Levy (1.5% gross)"
     },
-    {
-      "id": 3,
-      "name": "Life Insurance Premium",
-      "rate": 0.15,
-      "maxMonthly": 5000
-    },
-    {
-      "id": 4,
-      "name": "Education Policy Premium",
-      "rate": 0.15,
-      "maxMonthly": 5000
-    },
-    {
-      "id": 5,
-      "name": "Medical Insurance Premium",
-      "rate": 0.15,
-      "maxMonthly": 5000
-    },
-    {
-      "id": 6,
-      "name": "Post-Retirement Medical Fund",
-      "maxMonthly": 15000
-    }
-  ]
+    "optionalDeductions": [
+      {
+        "id": 1,
+        "name": "Pension Contribution",
+        "maxMonthly": 30000
+      },
+      {
+        "id": 2,
+        "name": "Mortgage Interest",
+        "maxMonthly": 30000
+      },
+      {
+        "id": 3,
+        "name": "Life Insurance Premium",
+        "rate": 0.15,
+        "maxMonthly": 5000
+      },
+      {
+        "id": 4,
+        "name": "Education Policy Premium",
+        "rate": 0.15,
+        "maxMonthly": 5000
+      },
+      {
+        "id": 5,
+        "name": "Medical Insurance Premium",
+        "rate": 0.15,
+        "maxMonthly": 5000
+      },
+      {
+        "id": 6,
+        "name": "Post-Retirement Medical Fund",
+        "maxMonthly": 15000
+      }
+    ]
+  }
 }
