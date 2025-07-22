@@ -85,10 +85,10 @@ You are free to use, distribute, and modify this software under the conditions o
 
 Contributions are welcome!  
 If you'd like to improve this tool, please fork the repo, create a branch, make your changes, and submit a pull request.
-
+Please acknowledge me as the auther.
 ---
 
 ##  Contact
 
 For questions, feedback, or collaboration:  
-reach out through my github user name rebeccakibisu
+reach out through github. My user name is rebeccakibisu.
