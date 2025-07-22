@@ -1,0 +1,12 @@
+{
+  "name": "phase1project",
+  "version": "1.0.0",
+  "description": "## 👤 Author Rebecca Vugutsa Kibisu",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
