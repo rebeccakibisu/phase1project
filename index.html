@@ -1,127 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Kenya PAYE Calculator-2025</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kenya PAYE Calculator 2025</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: #f3f4f6;
+      color: #1f2937;
+    }
+    header {
+      background: #047857;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+    header h1 {
+      margin-bottom: 0.5rem;
+    }
+    .container {
+      max-width: 960px;
+      margin: auto;
+      padding: 2rem;
+    }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .feature {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+    .cta {
+      background: #065f46;
+      color: white;
+      padding: 1.5rem;
+      margin-top: 3rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .cta button {
+      background: white;
+      color: #065f46;
+      padding: 0.75rem 1.5rem;
+      border-radius: 5px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .cta button:hover {
+      background: #e0f2f1;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+    #calculatorSection {
+      display: none;
+      background: white;
+      margin-top: 3rem;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+    #calculatorSection h2 {
+      margin-bottom: 1rem;
+    }
+    label {
+      display: block;
+      margin: 1rem 0 0.5rem;
+    }
+    input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+    }
+    .results p {
+      margin: 0.5rem 0;
+    }
+  </style>
 </head>
 <body>
-  <main>
-    <h1>Kenya PAYE Calculator-2025</h1>
 
-    <form id="payeForm">
-      <!-- INCOME SECTION -->
-      <fieldset>
-        <legend>Sources of Income (Gross Salary = Sum of All Below)</legend>
+  <header>
+    <h1>Kenya PAYE Calculator – 2025</h1>
+    <p>Accurate, simple, and instant calculation of your monthly tax obligations in Kenya</p>
+  </header>
 
-        <label>
-          <span class="required-label">Basic Salary <span class="required">*</span></span>:
-          <input type="number" id="basicSalary" required placeholder="Required *" />
-        </label>
+  <div class="container">
+    <h2>Why Use This Tool?</h2>
+    <div class="features">
+      <div class="feature">
+        <h3>✅ Updated Tax Rates</h3>
+        <p>Incorporates the latest PAYE brackets, NSSF, NHIF, and Housing Levy.</p>
+      </div>
+      <div class="feature">
+        <h3>🧮 Real-Time Calculations</h3>
+        <p>Get instant PAYE breakdown as you type — no page reloads.</p>
+      </div>
+    
+      <div class="feature">
+        <h3>💼 Ideal for Employees & Employers</h3>
+        <p>Helps you plan salaries, deductions, and statutory contributions with ease.</p>
+      </div>
+    </div>
 
-        <label>
-          House Allowance:
-          <input type="number" id="houseAllowance" placeholder="e.g. 15,000" />
-        </label>
+    <div class="cta">
+      <h2>Start Calculating Your PAYE Now</h2>
+      <button onclick="document.getElementById('calculatorSection').style.display='block'; this.style.display='none'">Launch PAYE Calculator</button>
+    </div>
 
-        <label>
-          Transport Allowance:
-          <input type="number" id="transportAllowance" placeholder="e.g. 5,000" />
-        </label>
+    <div id="calculatorSection">
+      <h2>PAYE Calculator</h2>
+      <form id="payeForm">
+        <label for="basicSalary">Total Gross Salary:</label>
+        <input type="number" id="basicSalary" required />
+        <button type="submit">Calculate</button>
+      </form>
 
-        <label>
-          Entertainment Allowance:
-          <input type="number" id="entertainmentAllowance" placeholder="e.g. 3,000" />
-        </label>
+      <div class="results">
+        <h3>Results</h3>
+        <p><strong>PAYE Payable:</strong> <span id="netPaye">KES 0</span></p>
+      </div>
+    </div>
+  </div>
 
-        <label>
-          Overtime Pay:
-          <input type="number" id="overtimePay" placeholder="e.g. 10,000" />
-        </label>
+  <footer>
+    &copy; 2025 Kenya PAYE Calculator. All rights reserved.
+  </footer>
 
-        <label>
-          Bonus:
-          <input type="number" id="bonus" placeholder="e.g. 20,000" />
-        </label>
-
-        <label>
-          Other Allowances:
-          <input type="number" id="otherAllowances" placeholder="Any additional income" />
-        </label>
-
-        <p><strong>Gross Salary Preview:</strong> <span id="grossPreview">KES 0</span></p>
-      </fieldset>
-
-      <!-- STATUTORY DEDUCTIONS -->
-      <fieldset>
-        <legend>Statutory Deductions (Auto-Populated)</legend>
-
-        <label>
-          NSSF Contribution:
-          <input type="text" id="nssf" readonly placeholder="6% of Gross Salary Max 4320" />
-        </label>
-
-        <label>
-          SHIF (2.75%):
-          <input type="text" id="shif" readonly placeholder="2.75% of Gross Pay" />
-        </label>
-
-        <label>
-          Housing Levy (1.5%):
-          <input type="text" id="housingLevy" readonly placeholder="1.5% of Gross Pay" />
-        </label>
-      </fieldset>
-
-      <!-- OPTIONAL DEDUCTIONS -->
-      <fieldset>
-        <legend>Optional Deductions</legend>
-
-        <label>
-          Pension Contribution:
-          <input type="number" id="pensionContribution" placeholder="Max 30,000 per month" />
-        </label>
-
-        <label>
-          Mortgage Interest:
-          <input type="number" id="mortgageInterest" placeholder="Max 30,000 per month" />
-        </label>
-
-        <label>
-          Life Insurance Premium:
-          <input type="number" id="lifeInsurance" placeholder="Max 5,000 per month (15% relief)" />
-        </label>
-
-        <label>
-          Education Policy Premium:
-          <input type="number" id="educationInsurance" placeholder="Max 5,000 per month (15% relief)" />
-        </label>
-
-        <label>
-          Medical Insurance Premium:
-          <input type="number" id="medicalInsurance" placeholder="Max 5,000 per month (15% relief)" />
-        </label>
-
-        <label>
-          Post-Retirement Medical Fund:
-          <input type="number" id="postRetirementFund" placeholder="Max 15,000 per month" />
-        </label>
-      </fieldset>
-
-      <button type="submit">Calculate PAYE</button>
-    </form>
-
-    <!-- RESULTS SECTION -->
-    <section id="results">
-      <h2>Calculation Results</h2>
-      <p><strong>Total Gross Salary:</strong> <span id="totalGross">KES 0</span></p>
-      <p><strong>Total Allowable Expenses:</strong> <span id="totalAllowable">KES 0</span></p>
-      <p><strong>Net Taxable Income:</strong> <span id="netTaxable">KES 0</span></p>
-      <p><strong>Gross PAYE:</strong> <span id="grossPaye">KES 0</span></p>
-      <p><strong>Tax Relief:</strong> <span id="taxRelief">KES 0</span></p>
-      <p><strong>Total Insurance Relief:</strong> <span id="insuranceRelief">KES 0</span></p>
-      <p><strong>Net PAYE:</strong> <span id="netPaye">KES 0</span></p>
-    </section>
-  </main>
-  
   <script src="script.js"></script>
 </body>
 </html>
