@@ -1,74 +1,94 @@
-# Kenya PAYE Calculator 2025
+# Kenya PAYE Calculator - 2025
 
-This is a single-page web application that calculates PAYE (Pay As You Earn) tax in Kenya for the year 2025. The calculator considers statutory deductions (NSSF, SHIF, Housing Levy), optional reliefs, and insurance benefits, and is fully aligned with Kenya's 2025 tax regulations.
+## 👤 Author
+Rebecca Vugutsa Kibisu
 
-## Features
+## 📝 Project Description
 
-* Real-time gross salary preview based on multiple income sources
-* Auto-calculation of:
+The **Kenya PAYE Calculator - 2025** is a web-based application designed to help employees, employers, and HR professionals in Kenya easily calculate monthly Pay As You Earn (PAYE) taxes and statutory deductions using updated 2025 tax rates.
 
-  * NSSF (Tier I & II)
-  * SHIF (2.75%)
-  * Housing Levy (1.5%)
-* Optional deductions:
+Key features include:
+- Dynamic calculation of Gross Salary
+- Automatic computation of:
+  - PAYE using progressive tax brackets
+  - NSSF (Tier 1 and Tier 2)
+  - NHIF contributions
+  - Housing Levy
+  - Personal and insurance reliefs
+- Real-time gross salary preview
+- Modern, user-friendly interface
+- Data-driven configuration using a local `db.json` file with `json-server`
 
-  * Pension Contributions (max 30,000)
-  * Mortgage Interest (max 30,000)
-  * Insurance Reliefs:
+---
 
-    * Life Insurance (max 5,000 with 15% relief)
-    * Education Policy (max 5,000 with 15% relief)
-    * Medical Insurance (max 5,000 with 15% relief)
-  * Post-Retirement Medical Fund (max 15,000)
-* Tax calculations using up-to-date PAYE brackets for 2025
-* Tax relief application (including personal and insurance reliefs)
-* Displays:
+##  Live Demo
 
-  * Gross Pay
-  * Total Allowable Expenses
-  * Net Taxable Income
-  * Gross PAYE
-  * Tax Relief and Insurance Relief
-  * Final Net PAYE (never less than 0)
+🌐 **Live on GitHub Pages**:  
+[https://rebeccakibisu.github.io/phase1project]
 
-## Technologies Used
+> Note: You can eplace with your actual GitHub Pages URL after deployment.
 
-* **HTML5** — Semantic structure
-* **CSS3** — Custom styling including 3D effect on form inputs
-* **JavaScript (ES6+)** — Functional logic and DOM manipulation
-* **json-server** — Local JSON REST API (using db.json)
+---
 
-## Setup Instructions
+##  Project Setup Instructions
 
-1. **Clone the repository**:
+### Prerequisites
+- [Node.js](https://nodejs.org/)
+- A modern browser
+- Code editor (e.g., VS Code)
 
-   ```bash
-   git clone https://github.com/rebeccakibisu/kenya-paye-calculator.git
+### 1. Clone the repository
+```bash
+git clone https://github.com/rebeccakibisu/phase1project.git
+cd phase1project/
+```
 
-   ```
+### 2. Install `json-server`
+```bash
+npm install -g json-server
+```
 
-2. **Install `json-server` globally if not installed**:
+### 3. Start the JSON server
+```bash
+json-server --watch db.json --port 3002
+```
 
-   ```bash
-   npm install -g json-server
-   ```
+### 4. Run the application
+Open `index.html` in your browser or use Live Server in VS Code.
 
-3. **Start the JSON server**:
+---
 
-   ```bash
-   json-server --watch db.json
-   ```
+## 📁 Project Structure
 
-4. **Open the project**:
+```
+kenya-paye-calculator/
+├── index.html         # Main HTML structure
+├── style.css          # All styles and animations
+├── script.js          # JavaScript logic and fetch operations
+├── db.json            # Tax brackets and deduction rules
+├── README.md          # Project documentation
+```
 
-   * Open `index.html` in your browser to access the PAYE Calculator.
+---
 
-## Contribution
+## 📄 License
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+© 2025 Rebecca Vugutsa Kibisu
 
-## License
+This project is licensed under the **MIT License**.
 
-This project is open-source and licensed under the MIT License.
+You are free to use, distribute, and modify this software under the conditions of the license.
 
+---
 
+## 🤝 Contributions
+
+Contributions are welcome!  
+If you'd like to improve this tool, please fork the repo, create a branch, make your changes, and submit a pull request.
+
+---
+
+##  Contact
+
+For questions, feedback, or collaboration:  
+reach out through my github user name rebeccakibisu
