@@ -1,9 +1,8 @@
 {
-  "name": "kenya-paye-calculator-api",
+  "name": "json-api",
   "version": "1.0.0",
-  "description": "Backend for PAYE calculator using JSON Server",
   "scripts": {
-    "start": "json-server --watch db.json --host 0.0.0.0 --port $PORT"
+    "start": "node server.js"
   },
   "dependencies": {
     "json-server": "^0.17.3"
